@@ -1,0 +1,44 @@
+### Variables
+@hostname = localhost
+@port = 5000
+@host = http://{{hostname}}:{{port}}/api/tasks
+
+### 1. GET ALL TASKS (Should return an empty array [] or existing tasks)
+GET {{host}}
+Accept: application/json
+
+###
+
+### 2. CREATE A NEW TASK
+# @name createTask
+POST {{host}}
+Content-Type: application/json
+
+{
+    "title": "Build the Frontend",
+    "description": "Create the React UI for this assessment",
+    "completed": false
+}
+
+###
+
+### 3. GET ALL TASKS AGAIN (Verify the new task exists)
+GET {{host}}
+
+###
+
+### 4. UPDATE THE TASK (Toggle Completed)
+# Replace the ID below with the _id from the "CREATE" response
+@taskId = {{createTask.response.body._id}}
+
+PUT {{host}}/{{taskId}}
+Content-Type: application/json
+
+{
+    "completed": true
+}
+
+###
+
+### 5. DELETE THE TASK
+DELETE {{host}}/{{taskId}}
